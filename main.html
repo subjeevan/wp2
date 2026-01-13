@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Eye Hospital Appointment System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .student-info h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .student-id {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .real-time-clock {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Form Cards */
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--card-shadow);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .form-label.required:after {
+            content: " *";
+            color: var(--danger);
+            position: absolute;
+            top: 0;
+            right: -10px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger);
+            background: #fef2f2;
+        }
+
+        .form-input.success {
+            border-color: var(--success);
+        }
+
+        .form-input:disabled {
+            background: #f3f4f6;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        textarea.form-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Patient Type Section */
+        .patient-type-section {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            border: 2px solid var(--gray-light);
+            flex-wrap: wrap;
+        }
+
+        /* Radio & Checkbox */
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-label,
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--light);
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+            position: relative;
+            font-weight: 500;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .radio-label i,
+        .checkbox-label i {
+            font-size: 1.1rem;
+        }
+
+        .radio-label:hover,
+        .checkbox-label:hover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+
+        .radio-label.active,
+        .checkbox-label.active {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Social Security */
+        .social-security-section {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border: 2px solid var(--gray-light);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray-light);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input:checked+.toggle-slider {
+            background-color: var(--success);
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        /* Color Picker */
+        .color-picker {
+            width: 60px;
+            height: 40px;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 2px;
+            background: white;
+        }
+
+        /* Card Types */
+        .card-types {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .card-type {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+        }
+
+        .card-type:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .card-type.active {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Doctor Search */
+        .doctor-search {
+            position: relative;
+        }
+
+        .doctor-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 2px;
+        }
+
+        .doctor-suggestion {
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .doctor-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .doctor-suggestion:hover {
+            background: var(--light);
+        }
+
+        /* Error Messages - FIXED VISIBILITY */
+        .error-message {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 20px;
+        }
+
+        .error-message.hidden {
+            visibility: hidden;
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .error-message.visible {
+            visibility: visible;
+            opacity: 1;
+            height: auto;
+        }
+
+        .success-message {
+            color: var(--success);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.85rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0da271;
+        }
+
+        /* Modal - Shows after submission */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .appointment-details {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--gray-light);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--dark);
+            text-align: right;
+            max-width: 60%;
+            word-break: break-word;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* JSON Display */
+        .json-display {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1rem;
+            border: 1px solid #333;
+        }
+
+        .json-key {
+            color: #9cdcfe;
+        }
+
+        .json-string {
+            color: #ce9178;
+        }
+
+        .json-number {
+            color: #b5cea8;
+        }
+
+        .json-boolean {
+            color: #569cd6;
+        }
+
+        .json-null {
+            color: #569cd6;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Character Counter */
+        .char-counter {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+
+        /* File Upload */
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-preview {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: var(--light);
+            border-radius: 8px;
+            border: 1px dashed var(--gray-light);
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* OPD Section */
+        .opd-section {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border: 2px solid #bae6fd;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Terms and Conditions Box */
+        .terms-box {
+            background: var(--light);
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .terms-box h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .terms-box ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .terms-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Other Symptom Input */
+        .other-symptom-input {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        /* FIXED: Custom Checkbox Styling */
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .custom-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-checkbox .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked+.checkmark {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked+.checkmark:after {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+
+            .header-content,
+            .nav-content,
+            .main-container {
+                padding: 0 1rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .patient-type-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .detail-row {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .detail-value {
+                max-width: 100%;
+                text-align: left;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .modal-actions .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-types {
+                flex-direction: column;
+            }
+
+            .card-type {
+                justify-content: center;
+            }
+
+            .radio-group,
+            .checkbox-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <noscript>
+            <div style="padding: 2rem; text-align: center; background: #fee; color: #c00;">
+                JavaScript is required to run this application.
+            </div>
+        </noscript>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="student-info">
+                    <h1>Eye Hospital Appointment System</h1>
+                    <div class="student-id">Jeevan Subedi - M25W7486</div>
+                </div>
+                <div class="real-time-clock">
+                    <i class="fas fa-clock"></i>
+                    {{ currentTime }}
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <div class="nav-logo">
+                    <i class="fas fa-eye"></i>
+                    <span>EyeCare Pro</span>
+                </div>
+                <!-- Dummy data button removed -->
+            </div>
+        </nav>
+
+        <!-- Main Form -->
+        <main class="main-container">
+            <form @submit.prevent="submitForm" v-if="isLoaded">
+                <!-- Patient Type Section -->
+                <div class="form-card">
+                    <h2 class="card-title"><i class="fas fa-user"></i> Patient Information</h2>
+
+                    <div class="patient-type-section">
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label required">Patient Type</label>
+                            <select class="form-input" v-model="form.patientType" @change="handlePatientTypeChange"
+                                @blur="validateField('patientType')">
+                                <option value="">Select Type</option>
+                                <option value="new">New Patient</option>
+                                <option value="old">Old Patient</option>
+                            </select>
+                            <div class="error-message" :class="errors.patientType ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.patientType }}
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label required">Patient ID</label>
+                            <input type="text" class="form-input" v-model="form.patientId"
+                                :disabled="form.patientType === 'new'" @input="validateField('patientId')"
+                                @blur="validateField('patientId')"
+                                :placeholder="form.patientType === 'old' ? 'PAT-123456-789' : 'Auto-generated for new patients'">
+                            <div class="error-message" :class="errors.patientId ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.patientId }}
+                            </div>
+                            <div class="success-message"
+                                v-if="form.patientType === 'new' && form.patientId && !errors.patientId">
+                                <i class="fas fa-check-circle"></i> New ID generated
+                            </div>
+                            <div class="success-message"
+                                v-if="form.patientType === 'old' && !errors.patientId && form.patientId">
+                                <i class="fas fa-check-circle"></i> Valid Patient ID
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OPD Paper Upload (only for old patients) -->
+                    <div class="opd-section" v-if="form.patientType === 'old'">
+                        <div class="form-group">
+                            <label class="form-label">Previous OPD Paper (PDF)</label>
+                            <div class="file-upload">
+                                <input type="file" accept=".pdf" @change="handleFileUpload($event, 'opdPaper')">
+                                <div class="form-input" style="cursor: pointer;">
+                                    <i class="fas fa-upload"></i> Click to upload PDF file
+                                </div>
+                            </div>
+                            <div class="file-preview" v-if="form.opdPaper">
+                                <i class="fas fa-file-pdf"></i> {{ form.opdPaper.name }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Information -->
+                <div class="form-card">
+                    <h2 class="card-title"><i class="fas fa-id-card"></i> Personal Details</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label required">First Name</label>
+                            <input type="text" class="form-input" v-model="form.firstName" maxlength="20"
+                                @input="validateField('firstName')" @blur="validateField('firstName')"
+                                placeholder="Enter first name">
+                            <div class="error-message" :class="errors.firstName ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.firstName }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Last Name</label>
+                            <input type="text" class="form-input" v-model="form.lastName" maxlength="20"
+                                @input="validateField('lastName')" @blur="validateField('lastName')"
+                                placeholder="Enter last name">
+                            <div class="error-message" :class="errors.lastName ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.lastName }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Date of Birth</label>
+                            <input type="date" class="form-input" v-model="form.dob" @change="validateField('dob')"
+                                @blur="validateField('dob')">
+                            <div class="error-message" :class="errors.dob ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.dob }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Gender</label>
+                            <div class="radio-group">
+                                <label class="radio-label" :class="{active: form.gender === 'male'}"
+                                    @click="form.gender = 'male'; validateField('gender')">
+                                    <i class="fas fa-mars"></i> Male
+                                </label>
+                                <label class="radio-label" :class="{active: form.gender === 'female'}"
+                                    @click="form.gender = 'female'; validateField('gender')">
+                                    <i class="fas fa-venus"></i> Female
+                                </label>
+                                <label class="radio-label" :class="{active: form.gender === 'other'}"
+                                    @click="form.gender = 'other'; validateField('gender')">
+                                    <i class="fas fa-transgender-alt"></i> Other
+                                </label>
+                            </div>
+                            <div class="error-message" :class="errors.gender ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.gender }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Security -->
+                    <div class="social-security-section">
+                        <div class="toggle-container">
+                            <label class="toggle-switch">
+                                <input type="checkbox" v-model="form.hasSocialSecurity" @change="toggleSocialSecurity">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span>I have Social Security Number</span>
+                        </div>
+
+                        <div class="form-group" v-if="form.hasSocialSecurity">
+                            <label class="form-label required">Social Security Number</label>
+                            <input type="text" class="form-input" v-model="form.socialSecurity"
+                                placeholder="XXX-XX-XXXX" maxlength="11" @input="formatSocialSecurity($event)"
+                                @blur="validateField('socialSecurity')">
+                            <div class="error-message" :class="errors.socialSecurity ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.socialSecurity }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label required">Mobile Number</label>
+                            <input type="tel" class="form-input" v-model="form.mobile" maxlength="10"
+                                @input="validateMobile" @blur="validateField('mobile')" placeholder="10 digits only">
+                            <div class="error-message" :class="errors.mobile ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.mobile }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Email</label>
+                            <input type="email" class="form-input" v-model="form.email" @input="validateField('email')"
+                                @blur="validateField('email')" placeholder="example@domain.com">
+                            <div class="error-message" :class="errors.email ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.email }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">City</label>
+                            <input type="text" class="form-input" v-model="form.city" @input="validateCity"
+                                @blur="validateField('city')" placeholder="City name (letters only)">
+                            <div class="error-message" :class="errors.city ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.city }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Address</label>
+                            <textarea class="form-input" v-model="form.address" maxlength="200" rows="3"
+                                @input="validateField('address')" @blur="validateField('address')"
+                                placeholder="Enter your complete address"></textarea>
+                            <div class="char-counter">{{ form.address.length }}/200</div>
+                            <div class="error-message" :class="errors.address ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.address }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">ZIP/Postal Code</label>
+                            <input type="text" class="form-input" v-model="form.zipCode" maxlength="10"
+                                @input="formatZipCode" @blur="validateField('zipCode')"
+                                placeholder="Format: 12345 or 12345-6789">
+                            <div class="error-message" :class="errors.zipCode ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.zipCode }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Information -->
+                <div class="form-card">
+                    <h2 class="card-title"><i class="fas fa-file-medical"></i> Medical Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Eye Condition</label>
+                            <div class="radio-group">
+                                <label class="radio-label" :class="{active: form.eyeCondition === 'myopia'}"
+                                    @click="form.eyeCondition = 'myopia'">
+                                    <i class="fas fa-eye"></i> Myopia
+                                </label>
+                                <label class="radio-label" :class="{active: form.eyeCondition === 'hyperopia'}"
+                                    @click="form.eyeCondition = 'hyperopia'">
+                                    <i class="fas fa-eye"></i> Hyperopia
+                                </label>
+                                <label class="radio-label" :class="{active: form.eyeCondition === 'astigmatism'}"
+                                    @click="form.eyeCondition = 'astigmatism'">
+                                    <i class="fas fa-eye"></i> Astigmatism
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Symptoms</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label" :class="{active: form.symptoms.includes('blurred')}"
+                                    @click="toggleSymptom('blurred')">
+                                    <i class="fas fa-low-vision"></i> Blurred Vision
+                                </label>
+                                <label class="checkbox-label" :class="{active: form.symptoms.includes('pain')}"
+                                    @click="toggleSymptom('pain')">
+                                    <i class="fas fa-tachometer-alt"></i> Eye Pain
+                                </label>
+                                <label class="checkbox-label" :class="{active: form.symptoms.includes('headache')}"
+                                    @click="toggleSymptom('headache')">
+                                    <i class="fas fa-head-side-virus"></i> Headaches
+                                </label>
+                                <label class="checkbox-label" :class="{active: form.symptoms.includes('other')}"
+                                    @click="toggleSymptom('other')">
+                                    <i class="fas fa-plus-circle"></i> Other
+                                </label>
+                            </div>
+                            <div class="error-message" :class="errors.symptoms ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.symptoms }}
+                            </div>
+
+                            <!-- Other Symptom Input -->
+                            <div class="other-symptom-input" v-if="form.symptoms.includes('other')">
+                                <label class="form-label">Please specify other symptom:</label>
+                                <input type="text" class="form-input" v-model="form.otherSymptom"
+                                    placeholder="Describe your symptom..." maxlength="100">
+                                <div class="char-counter">{{ form.otherSymptom.length }}/100</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Symptom Duration</label>
+                            <select class="form-input" v-model="form.symptomDuration"
+                                @change="validateField('symptomDuration')" @blur="validateField('symptomDuration')">
+                                <option value="">Select Duration</option>
+                                <option value="1week">Less than 1 week</option>
+                                <option value="1month">1-4 weeks</option>
+                                <option value="6months">1-6 months</option>
+                                <option value="6plus">More than 6 months</option>
+                            </select>
+                            <div class="error-message" :class="errors.symptomDuration ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.symptomDuration }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Pain Level</label>
+                            <div style="text-align: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">
+                                    {{ form.painLevel }}/10
+                                </span>
+                            </div>
+                            <input type="range" class="form-input" v-model="form.painLevel" min="0" max="10" step="1"
+                                style="padding: 0; height: 8px;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--gray);">
+                                <span>No Pain</span>
+                                <span>Severe Pain</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Eye Color</label>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <input type="color" class="color-picker" v-model="form.eyeColor">
+                                <span style="font-weight: 600;">{{ form.eyeColor.toUpperCase() }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attachment -->
+                    <div class="form-group">
+                        <label class="form-label">Medical Attachment (Image)</label>
+                        <div class="file-upload">
+                            <input type="file" accept="image/*" @change="handleFileUpload($event, 'medicalImage')">
+                            <div class="form-input" style="cursor: pointer;">
+                                <i class="fas fa-image"></i> Click to upload image
+                            </div>
+                        </div>
+                        <div class="file-preview" v-if="form.medicalImage">
+                            <i class="fas fa-file-image"></i> {{ form.medicalImage.name }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointment Details -->
+                <div class="form-card">
+                    <h2 class="card-title"><i class="fas fa-calendar-alt"></i> Appointment Details</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label required">Select Doctor</label>
+                            <div class="doctor-search">
+                                <input type="text" class="form-input" v-model="form.doctorSearch" @input="searchDoctors"
+                                    @focus="showDoctorSuggestions = true"
+                                    @blur="hideDoctorSuggestions; validateField('doctor')"
+                                    placeholder="Search for a doctor...">
+                                <div class="doctor-suggestions" v-if="showDoctorSuggestions && filteredDoctors.length">
+                                    <div class="doctor-suggestion" v-for="doctor in filteredDoctors" :key="doctor.id"
+                                        @mousedown="selectDoctor(doctor)">
+                                        <strong>{{ doctor.name }}</strong><br>
+                                        <small>{{ doctor.specialization }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="error-message" :class="errors.doctor ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.doctor }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">Appointment Date & Time</label>
+                            <input type="datetime-local" class="form-input" v-model="form.appointmentDateTime"
+                                :min="minDateTime" @change="validateField('appointmentDateTime')"
+                                @blur="validateField('appointmentDateTime')">
+                            <div class="error-message" :class="errors.appointmentDateTime ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.appointmentDateTime }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="form-card">
+                    <h2 class="card-title"><i class="fas fa-credit-card"></i> Payment Details</h2>
+
+                    <div class="form-group">
+                        <label class="form-label required">Card Type</label>
+                        <div class="card-types">
+                            <label class="card-type" :class="{active: form.cardType === 'visa'}"
+                                @click="form.cardType = 'visa'; validateField('cardType')">
+                                <i class="fab fa-cc-visa" style="color: #1a1f71; font-size: 1.2rem;"></i>
+                                <span>Visa</span>
+                            </label>
+                            <label class="card-type" :class="{active: form.cardType === 'mastercard'}"
+                                @click="form.cardType = 'mastercard'; validateField('cardType')">
+                                <i class="fab fa-cc-mastercard" style="color: #eb001b; font-size: 1.2rem;"></i>
+                                <span>MasterCard</span>
+                            </label>
+                            <label class="card-type" :class="{active: form.cardType === 'online'}"
+                                @click="form.cardType = 'online'; validateField('cardType')">
+                                <i class="fas fa-globe" style="color: var(--primary); font-size: 1.2rem;"></i>
+                                <span>Online Payment</span>
+                            </label>
+                        </div>
+                        <div class="error-message" :class="errors.cardType ? 'visible' : 'hidden'">
+                            <i class="fas fa-exclamation-circle"></i> {{ errors.cardType }}
+                        </div>
+                    </div>
+
+                    <div v-if="form.cardType === 'visa' || form.cardType === 'mastercard'" class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label required">Card Number</label>
+                            <input type="text" class="form-input" v-model="form.cardNumber" maxlength="19"
+                                @input="formatCardNumber" @blur="validateField('cardNumber')"
+                                placeholder="XXXX-XXXX-XXXX-XXXX">
+                            <div class="error-message" :class="errors.cardNumber ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.cardNumber }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label required">CVV</label>
+                            <input type="password" class="form-input" v-model="form.cvv" maxlength="3"
+                                @input="validateCVV" @blur="validateField('cvv')" placeholder="3 digits">
+                            <div class="error-message" :class="errors.cvv ? 'visible' : 'hidden'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.cvv }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="form.cardType === 'online'" class="form-group">
+                        <label class="form-label required">Payment URL</label>
+                        <input type="url" class="form-input" v-model="form.paymentUrl"
+                            @input="validateField('paymentUrl')" @blur="validateField('paymentUrl')"
+                            placeholder="https://payment.example.com">
+                        <div class="error-message" :class="errors.paymentUrl ? 'visible' : 'hidden'">
+                            <i class="fas fa-exclamation-circle"></i> {{ errors.paymentUrl }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Additional Options -->
+                <div class="form-card">
+                    <div class="form-group">
+                        <div class="toggle-container">
+                            <label class="toggle-switch">
+                                <input type="checkbox" v-model="form.acceptTerms"
+                                    @change="validateField('acceptTerms')">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span style="font-weight: 600;">I accept the Terms & Conditions</span>
+                        </div>
+                        <div class="error-message" :class="errors.acceptTerms ? 'visible' : 'hidden'">
+                            <i class="fas fa-exclamation-circle"></i> {{ errors.acceptTerms }}
+                        </div>
+
+                        <!-- Terms and Conditions Content -->
+                        <div class="terms-box" v-if="form.acceptTerms">
+                            <h4>EyeCare Pro Hospital Terms & Conditions</h4>
+                            <p>By accepting these terms, you agree to:</p>
+                            <ul>
+                                <li>Provide accurate and complete medical information</li>
+                                <li>Arrive 15 minutes before your scheduled appointment time</li>
+                                <li>Cancel or reschedule at least 24 hours in advance</li>
+                                <li>Bring valid identification and insurance information</li>
+                                <li>Pay any applicable co-pays or fees at time of service</li>
+                                <li>Follow all hospital policies and procedures</li>
+                                <li>Consent to necessary medical treatments and procedures</li>
+                                <li>Allow sharing of medical information with your primary care physician</li>
+                                <li>Responsible for any charges not covered by insurance</li>
+                                <li>Comply with all applicable laws and regulations</li>
+                            </ul>
+                            <p><strong>Privacy Policy:</strong> We protect your personal and medical information
+                                according to HIPAA regulations.</p>
+                            <p><strong>Cancellation Policy:</strong> Late cancellations may incur a fee of $50.</p>
+                            <p><strong>Emergency Contact:</strong> In case of emergency, call 911 or visit the nearest
+                                emergency room.</p>
+                        </div>
+                    </div>
+
+                    <!-- SMS and Newsletter checkboxes -->
+                    <div class="checkbox-group" style="margin-top: 1.5rem;">
+                        <div class="custom-checkbox" @click="form.smsReminder = !form.smsReminder">
+                            <input type="checkbox" v-model="form.smsReminder" hidden>
+                            <span class="checkmark"></span>
+                            <span><i class="fas fa-sms"></i> SMS Reminders</span>
+                        </div>
+                        <div class="custom-checkbox" @click="form.newsletter = !form.newsletter">
+                            <input type="checkbox" v-model="form.newsletter" hidden>
+                            <span class="checkmark"></span>
+                            <span><i class="fas fa-newspaper"></i> Newsletter Updates</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
+                        <span v-if="isSubmitting" class="loading-spinner"></span>
+                        <span v-else>
+                            <i class="fas fa-paper-plane"></i> Submit Appointment
+                        </span>
+                    </button>
+                    <button type="button" class="btn btn-danger" @click="resetForm">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                </div>
+            </form>
+
+            <!-- Loading State -->
+            <div v-if="!isLoaded" style="text-align: center; padding: 3rem;">
+                <div class="loading-spinner" style="margin: 0 auto 1rem;"></div>
+                <p style="color: var(--gray); font-size: 1.1rem;">Loading appointment system...</p>
+            </div>
+        </main>
+
+        <!-- Confirmation Modal - Shows after successful submission -->
+        <div class="modal-overlay" v-if="showModal && isLoaded" @click.self="closeModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                        Appointment Confirmed!
+                    </h2>
+                    <button class="btn btn-secondary" @click="closeModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="appointment-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Appointment ID:</span>
+                        <span class="detail-value" style="color: var(--primary); font-weight: 800;">{{ appointmentId
+                            }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Patient Name:</span>
+                        <span class="detail-value">{{ form.firstName }} {{ form.lastName }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Patient ID:</span>
+                        <span class="detail-value">{{ form.patientId }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Doctor:</span>
+                        <span class="detail-value">{{ form.doctor }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Appointment Date & Time:</span>
+                        <span class="detail-value">{{ formatDateTime(form.appointmentDateTime) }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Symptoms:</span>
+                        <span class="detail-value">{{ getSymptomsDisplay() }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Payment Method:</span>
+                        <span class="detail-value">{{ getCardTypeDisplay(form.cardType) }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Total Amount:</span>
+                        <span class="detail-value">$150.00</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">SMS Reminders:</span>
+                        <span class="detail-value">{{ form.smsReminder ? 'Yes' : 'No' }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Newsletter:</span>
+                        <span class="detail-value">{{ form.newsletter ? 'Yes' : 'No' }}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Appointment Summary (JSON):</label>
+                    <div class="json-display">
+                        <pre v-html="formattedJSONHtml"></pre>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-primary" @click="saveData">
+                        <i class="fas fa-save"></i> Save JSON Data
+                    </button>
+                    <button class="btn btn-success" @click="printData">
+                        <i class="fas fa-print"></i> Print Appointment
+                    </button>
+                    <button class="btn btn-secondary" @click="closeModal">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Error handler
+        window.onerror = function (msg, url, line) {
+            document.body.innerHTML = '<div style="padding:2rem;background:#fee;color:#c00;"><h2>Error</h2><p>' + msg + '</p><p>Line: ' + line + '</p></div>';
+            return false;
+        };
+
+        // Check if Vue is loaded
+        if (typeof Vue === 'undefined') {
+            document.body.innerHTML = '<div style="padding:2rem;background:#fee;color:#c00;"><h2>Error</h2><p>Vue.js failed to load. Please check your internet connection.</p></div>';
+        } else {
+            const { createApp } = Vue;
+
+            createApp({
+                data() {
+                    return {
+                        isLoaded: false,
+                        currentTime: '',
+                        showModal: false,
+                        isSubmitting: false,
+                        showDoctorSuggestions: false,
+                        appointmentId: '',
+                        doctors: [
+                            { id: 1, name: 'Dr. Sarah Johnson', specialization: 'Retina Specialist' },
+                            { id: 2, name: 'Dr. Michael Chen', specialization: 'Cornea Specialist' },
+                            { id: 3, name: 'Dr. Emily Rodriguez', specialization: 'Pediatric Ophthalmology' },
+                            { id: 4, name: 'Dr. Robert Williams', specialization: 'Glaucoma Specialist' },
+                            { id: 5, name: 'Dr. Lisa Thompson', specialization: 'Cataract Surgery' }
+                        ],
+                        filteredDoctors: [],
+                        errors: {},
+                        form: {
+                            // Patient Info
+                            patientType: '',
+                            patientId: '',
+                            opdPaper: null,
+
+                            // Personal Info
+                            firstName: '',
+                            lastName: '',
+                            dob: '',
+                            gender: '',
+                            hasSocialSecurity: false,
+                            socialSecurity: '',
+                            mobile: '',
+                            email: '',
+                            city: '',
+                            address: '',
+                            zipCode: '',
+
+                            // Medical Info
+                            eyeCondition: '',
+                            symptoms: [],
+                            otherSymptom: '',
+                            symptomDuration: '',
+                            painLevel: 5,
+                            eyeColor: '#8b4513',
+                            medicalImage: null,
+
+                            // Appointment
+                            doctorSearch: '',
+                            doctor: '',
+                            appointmentDateTime: '',
+
+                            // Payment
+                            cardType: '',
+                            cardNumber: '',
+                            cvv: '',
+                            paymentUrl: '',
+
+                            // Terms & Options
+                            acceptTerms: false,
+                            smsReminder: false,
+                            newsletter: false
+                        }
+                    };
+                },
+                computed: {
+                    formattedJSON() {
+                        const dataToExport = {
+                            appointmentId: this.appointmentId,
+                            patientType: this.form.patientType,
+                            patientId: this.form.patientId,
+                            patientName: `${this.form.firstName} ${this.form.lastName}`,
+                            dob: this.form.dob,
+                            gender: this.form.gender,
+                            hasSocialSecurity: this.form.hasSocialSecurity,
+                            socialSecurity: this.form.socialSecurity,
+                            mobile: this.form.mobile,
+                            email: this.form.email,
+                            city: this.form.city,
+                            address: this.form.address,
+                            zipCode: this.form.zipCode,
+                            eyeCondition: this.form.eyeCondition,
+                            symptoms: this.form.symptoms,
+                            otherSymptom: this.form.otherSymptom,
+                            symptomDuration: this.form.symptomDuration,
+                            painLevel: this.form.painLevel,
+                            eyeColor: this.form.eyeColor,
+                            doctor: this.form.doctor,
+                            appointmentDateTime: this.form.appointmentDateTime,
+                            appointmentDate: this.formatDateTime(this.form.appointmentDateTime),
+                            cardType: this.form.cardType,
+                            cardNumber: this.form.cardNumber ? 'XXXX-XXXX-XXXX-' + (this.form.cardNumber.slice(-4) || '') : '',
+                            paymentUrl: this.form.paymentUrl,
+                            acceptTerms: this.form.acceptTerms,
+                            smsReminder: this.form.smsReminder,
+                            newsletter: this.form.newsletter,
+                            hasOpdPaper: !!this.form.opdPaper,
+                            hasMedicalImage: !!this.form.medicalImage,
+                            timestamp: new Date().toISOString(),
+                            totalAmount: "$150.00"
+                        };
+                        return JSON.stringify(dataToExport, null, 2);
+                    },
+                    formattedJSONHtml() {
+                        const jsonString = this.formattedJSON;
+                        // Simple syntax highlighting for JSON
+                        return jsonString
+                            .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                                let cls = 'json-number';
+                                if (/^"/.test(match)) {
+                                    if (/:$/.test(match)) {
+                                        cls = 'json-key';
+                                    } else {
+                                        cls = 'json-string';
+                                    }
+                                } else if (/true|false/.test(match)) {
+                                    cls = 'json-boolean';
+                                } else if (/null/.test(match)) {
+                                    cls = 'json-null';
+                                }
+                                return '<span class="' + cls + '">' + match + '</span>';
+                            });
+                    },
+                    minDateTime() {
+                        const now = new Date();
+                        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                        return now.toISOString().slice(0, 16);
+                    }
+                },
+                mounted() {
+                    this.isLoaded = true;
+                    // Initialize current time immediately
+                    const now = new Date();
+                    this.currentTime = now.toLocaleTimeString('en-US', {
+                        hour12: true,
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+                    // Real-time clock
+                    setInterval(() => {
+                        const now = new Date();
+                        this.currentTime = now.toLocaleTimeString('en-US', {
+                            hour12: true,
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit'
+                        });
+                    }, 1000);
+                },
+                methods: {
+                    // Patient Type Handling
+                    handlePatientTypeChange() {
+                        this.errors.patientType = '';
+
+                        if (this.form.patientType === 'new') {
+                            const timestamp = Date.now().toString().slice(-6);
+                            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                            this.form.patientId = `PAT-${timestamp}-${random}`;
+                            this.form.opdPaper = null;
+                        } else if (this.form.patientType === 'old') {
+                            this.form.patientId = '';
+                        }
+                        this.validateField('patientType');
+                    },
+
+                    // Field Validation - FIXED: Now properly shows errors
+                    validateField(field) {
+                        const value = this.form[field];
+
+                        switch (field) {
+                            case 'patientType':
+                                this.errors.patientType = !value ? 'Please select patient type' : '';
+                                break;
+                            case 'patientId':
+                                if (this.form.patientType === 'old') {
+                                    this.errors.patientId = !value ? 'Please enter patient ID' :
+                                        !/^PAT-\d{6}-\d{3}$/.test(value) ? 'Invalid patient ID format (PAT-123456-789)' : '';
+                                } else {
+                                    this.errors.patientId = '';
+                                }
+                                break;
+                            case 'firstName':
+                                this.errors.firstName = !value ? 'First name is required' :
+                                    value.length > 20 ? 'Maximum 20 characters allowed' : '';
+                                break;
+                            case 'lastName':
+                                this.errors.lastName = !value ? 'Last name is required' :
+                                    value.length > 20 ? 'Maximum 20 characters allowed' : '';
+                                break;
+                            case 'dob':
+                                if (!value) {
+                                    this.errors.dob = 'Date of birth is required';
+                                } else {
+                                    const dob = new Date(value);
+                                    const today = new Date();
+                                    const age = today.getFullYear() - dob.getFullYear();
+                                    if (age < 0 || age > 120) {
+                                        this.errors.dob = 'Invalid date of birth';
+                                    } else if (age < 18) {
+                                        this.errors.dob = 'Must be 18 years or older';
+                                    } else {
+                                        this.errors.dob = '';
+                                    }
+                                }
+                                break;
+                            case 'gender':
+                                this.errors.gender = !value ? 'Please select gender' : '';
+                                break;
+                            case 'socialSecurity':
+                                if (this.form.hasSocialSecurity) {
+                                    this.errors.socialSecurity = !value ? 'Social Security Number is required' :
+                                        !/^\d{3}-\d{2}-\d{4}$/.test(value) ? 'Invalid SSN format (XXX-XX-XXXX)' : '';
+                                } else {
+                                    this.errors.socialSecurity = '';
+                                }
+                                break;
+                            case 'mobile':
+                                if (!value) {
+                                    this.errors.mobile = 'Mobile number is required';
+                                } else {
+                                    this.errors.mobile = value.length !== 10 ? 'Must be exactly 10 digits' : '';
+                                }
+                                break;
+                            case 'email':
+                                if (!value) {
+                                    this.errors.email = 'Email is required';
+                                } else {
+                                    this.errors.email = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? 'Invalid email format' : '';
+                                }
+                                break;
+                            case 'city':
+                                if (!value) {
+                                    this.errors.city = 'City is required';
+                                } else {
+                                    const lettersOnly = /^[A-Za-z\s]+$/.test(value);
+                                    this.errors.city = !lettersOnly ? 'Only letters allowed' : '';
+                                }
+                                break;
+                            case 'address':
+                                if (!value) {
+                                    this.errors.address = 'Address is required';
+                                } else {
+                                    this.errors.address = value.length > 200 ? 'Maximum 200 characters' : '';
+                                }
+                                break;
+                            case 'zipCode':
+                                if (!value) {
+                                    this.errors.zipCode = 'ZIP code is required';
+                                } else {
+                                    const zipPattern = /^\d{5}(-\d{4})?$/;
+                                    this.errors.zipCode = !zipPattern.test(value) ? 'Invalid ZIP code format (12345 or 12345-6789)' : '';
+                                }
+                                break;
+                            case 'symptoms':
+                                this.errors.symptoms = this.form.symptoms.length === 0 ? 'Select at least one symptom' : '';
+                                break;
+                            case 'symptomDuration':
+                                this.errors.symptomDuration = !value ? 'Please select symptom duration' : '';
+                                break;
+                            case 'doctor':
+                                this.errors.doctor = !value ? 'Please select a doctor' : '';
+                                break;
+                            case 'appointmentDateTime':
+                                if (!value) {
+                                    this.errors.appointmentDateTime = 'Appointment date and time is required';
+                                } else {
+                                    const selected = new Date(value);
+                                    const now = new Date();
+                                    if (selected <= now) {
+                                        this.errors.appointmentDateTime = 'Appointment must be in the future';
+                                    } else {
+                                        this.errors.appointmentDateTime = '';
+                                    }
+                                }
+                                break;
+                            case 'cardType':
+                                this.errors.cardType = !value ? 'Please select payment method' : '';
+                                break;
+                            case 'cardNumber':
+                                if (this.form.cardType === 'visa' || this.form.cardType === 'mastercard') {
+                                    if (!value) {
+                                        this.errors.cardNumber = 'Card number is required';
+                                    } else {
+                                        const cleaned = value.replace(/\D/g, '');
+                                        this.errors.cardNumber = cleaned.length !== 16 ? 'Must be 16 digits' : '';
+                                    }
+                                } else {
+                                    this.errors.cardNumber = '';
+                                }
+                                break;
+                            case 'cvv':
+                                if (this.form.cardType === 'visa' || this.form.cardType === 'mastercard') {
+                                    if (!value) {
+                                        this.errors.cvv = 'CVV is required';
+                                    } else {
+                                        this.errors.cvv = value.length !== 3 ? 'Must be 3 digits' : '';
+                                    }
+                                } else {
+                                    this.errors.cvv = '';
+                                }
+                                break;
+                            case 'paymentUrl':
+                                if (this.form.cardType === 'online') {
+                                    this.errors.paymentUrl = !value ? 'Payment URL is required' :
+                                        !/^https?:\/\/.+\..+/.test(value) ? 'Invalid URL format' : '';
+                                } else {
+                                    this.errors.paymentUrl = '';
+                                }
+                                break;
+                            case 'acceptTerms':
+                                this.errors.acceptTerms = !value ? 'You must accept terms & conditions' : '';
+                                break;
+                        }
+                    },
+
+                    // Custom Validation Methods
+                    validateMobile() {
+                        const value = this.form.mobile.replace(/\D/g, '');
+                        this.form.mobile = value;
+                        this.validateField('mobile');
+                    },
+
+                    validateCity() {
+                        const value = this.form.city.replace(/[^A-Za-z\s]/g, '');
+                        this.form.city = value;
+                        this.validateField('city');
+                    },
+
+                    formatZipCode() {
+                        let value = this.form.zipCode.replace(/[^\d-]/g, '');
+
+                        if (value.length > 5 && !value.includes('-')) {
+                            value = value.substring(0, 5) + '-' + value.substring(5, 9);
+                        }
+
+                        if (value.length > 10) {
+                            value = value.substring(0, 10);
+                        }
+
+                        this.form.zipCode = value;
+                        this.validateField('zipCode');
+                    },
+
+                    validateCVV() {
+                        const value = this.form.cvv.replace(/\D/g, '').slice(0, 3);
+                        this.form.cvv = value;
+                        this.validateField('cvv');
+                    },
+
+                    // Formatting Functions
+                    formatSocialSecurity(event) {
+                        let value = event.target.value.replace(/\D/g, '');
+                        if (value.length > 3) {
+                            value = value.substring(0, 3) + '-' + value.substring(3);
+                        }
+                        if (value.length > 6) {
+                            value = value.substring(0, 6) + '-' + value.substring(6);
+                        }
+                        if (value.length > 11) {
+                            value = value.substring(0, 11);
+                        }
+                        this.form.socialSecurity = value;
+                        this.validateField('socialSecurity');
+                    },
+
+                    formatCardNumber(event) {
+                        let value = event.target.value.replace(/\D/g, '');
+                        if (value.length > 4) {
+                            value = value.substring(0, 4) + '-' + value.substring(4);
+                        }
+                        if (value.length > 9) {
+                            value = value.substring(0, 9) + '-' + value.substring(9);
+                        }
+                        if (value.length > 14) {
+                            value = value.substring(0, 14) + '-' + value.substring(14);
+                        }
+                        if (value.length > 19) {
+                            value = value.substring(0, 19);
+                        }
+                        this.form.cardNumber = value;
+                    },
+
+                    toggleSocialSecurity() {
+                        if (!this.form.hasSocialSecurity) {
+                            this.form.socialSecurity = '';
+                            this.errors.socialSecurity = '';
+                        } else {
+                            this.validateField('socialSecurity');
+                        }
+                    },
+
+                    // File Upload
+                    handleFileUpload(event, field) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            if (field === 'opdPaper' && !file.name.toLowerCase().endsWith('.pdf')) {
+                                alert('Please upload a PDF file');
+                                event.target.value = '';
+                                return;
+                            }
+                            this.form[field] = file;
+                        }
+                    },
+
+                    // Doctor Search
+                    searchDoctors() {
+                        if (this.form.doctorSearch) {
+                            this.filteredDoctors = this.doctors.filter(doctor =>
+                                doctor.name.toLowerCase().includes(this.form.doctorSearch.toLowerCase()) ||
+                                doctor.specialization.toLowerCase().includes(this.form.doctorSearch.toLowerCase())
+                            );
+                        } else {
+                            this.filteredDoctors = [...this.doctors];
+                        }
+                    },
+
+                    hideDoctorSuggestions() {
+                        setTimeout(() => {
+                            this.showDoctorSuggestions = false;
+                        }, 200);
+                    },
+
+                    selectDoctor(doctor) {
+                        this.form.doctor = doctor.name;
+                        this.form.doctorSearch = doctor.name;
+                        this.showDoctorSuggestions = false;
+                        this.validateField('doctor');
+                    },
+
+                    // Symptoms
+                    toggleSymptom(symptom) {
+                        const index = this.form.symptoms.indexOf(symptom);
+                        if (index === -1) {
+                            this.form.symptoms.push(symptom);
+                        } else {
+                            this.form.symptoms.splice(index, 1);
+                            if (symptom === 'other') {
+                                this.form.otherSymptom = '';
+                            }
+                        }
+                        this.validateField('symptoms');
+                    },
+
+                    getSymptomsDisplay() {
+                        const symptomMap = {
+                            'blurred': 'Blurred Vision',
+                            'pain': 'Eye Pain',
+                            'headache': 'Headaches',
+                            'other': this.form.otherSymptom || 'Other'
+                        };
+
+                        const symptoms = this.form.symptoms.map(symptom => symptomMap[symptom]).filter(Boolean);
+                        return symptoms.length > 0 ? symptoms.join(', ') : 'None';
+                    },
+
+                    getCardTypeDisplay(cardType) {
+                        switch (cardType) {
+                            case 'visa': return 'Visa';
+                            case 'mastercard': return 'MasterCard';
+                            case 'online': return 'Online Payment';
+                            default: return 'Not Selected';
+                        }
+                    },
+
+                    // Form Submission - Shows modal on success
+                    async submitForm() {
+                        const requiredFields = [
+                            'patientType', 'patientId', 'firstName', 'lastName', 'dob', 'gender',
+                            'mobile', 'email', 'city', 'address', 'zipCode', 'symptoms',
+                            'symptomDuration', 'doctor', 'appointmentDateTime', 'cardType',
+                            'acceptTerms'
+                        ];
+
+                        if (this.form.hasSocialSecurity) {
+                            requiredFields.push('socialSecurity');
+                        }
+
+                        if (this.form.cardType === 'visa' || this.form.cardType === 'mastercard') {
+                            requiredFields.push('cardNumber', 'cvv');
+                        }
+
+                        if (this.form.cardType === 'online') {
+                            requiredFields.push('paymentUrl');
+                        }
+
+                        requiredFields.forEach(field => this.validateField(field));
+
+                        const hasErrors = Object.values(this.errors).some(error => error !== '' && error !== undefined);
+
+                        if (hasErrors) {
+                            alert('Please fix all validation errors before submitting.');
+                            // Scroll to first error
+                            const firstErrorField = Object.keys(this.errors).find(field => this.errors[field]);
+                            if (firstErrorField) {
+                                const element = document.querySelector(`[v-model="form.${firstErrorField}"]`);
+                                if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                            return;
+                        }
+
+                        const timestamp = Date.now().toString().slice(-8);
+                        const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+                        this.appointmentId = `APT-${timestamp}-${random}`;
+
+                        this.isSubmitting = true;
+
+                        setTimeout(() => {
+                            this.showModal = true; // Show modal on success
+                            this.isSubmitting = false;
+                        }, 1500);
+                    },
+
+                    // Close Modal
+                    closeModal() {
+                        this.showModal = false;
+                    },
+
+                    // Reset Form
+                    resetForm() {
+                        if (confirm('Are you sure you want to reset all form data?')) {
+                            this.form = {
+                                patientType: '',
+                                patientId: '',
+                                opdPaper: null,
+                                firstName: '',
+                                lastName: '',
+                                dob: '',
+                                gender: '',
+                                hasSocialSecurity: false,
+                                socialSecurity: '',
+                                mobile: '',
+                                email: '',
+                                city: '',
+                                address: '',
+                                zipCode: '',
+                                eyeCondition: '',
+                                symptoms: [],
+                                otherSymptom: '',
+                                symptomDuration: '',
+                                painLevel: 5,
+                                eyeColor: '#8b4513',
+                                medicalImage: null,
+                                doctorSearch: '',
+                                doctor: '',
+                                appointmentDateTime: '',
+                                cardType: '',
+                                cardNumber: '',
+                                cvv: '',
+                                paymentUrl: '',
+                                acceptTerms: false,
+                                smsReminder: false,
+                                newsletter: false
+                            };
+                            this.errors = {};
+                            this.showModal = false;
+                            this.appointmentId = '';
+                            alert('Form has been reset.');
+                        }
+                    },
+
+                    // Format DateTime for display
+                    formatDateTime(datetime) {
+                        if (!datetime) return 'N/A';
+                        const date = new Date(datetime);
+                        return date.toLocaleString('en-US', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    },
+
+                    // Save Data as JSON file
+                    saveData() {
+                        try {
+                            const blob = new Blob([this.formattedJSON], { type: 'application/json' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `appointment_${this.appointmentId}.json`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                            alert(`Appointment data saved as appointment_${this.appointmentId}.json`);
+                        } catch (error) {
+                            alert('Error saving file. Please try again.');
+                            console.error('Error saving file:', error);
+                        }
+                    },
+
+                    // Print Data
+                    printData() {
+                        const printContent = `
+                        <html>
+                            <head>
+                                <title>Appointment Confirmation - ${this.appointmentId}</title>
+                                <style>
+                                    body { font-family: Arial, sans-serif; padding: 20px; }
+                                    h1 { color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 10px; }
+                                    .appointment-details { margin: 20px 0; }
+                                    .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e2e8f0; }
+                                    .detail-label { font-weight: bold; color: #64748b; }
+                                    .detail-value { font-weight: 600; }
+                                    pre { background: #f8fafc; padding: 15px; border-radius: 5px; border: 1px solid #e2e8f0; overflow-x: auto; }
+                                    @media print {
+                                        body { padding: 0; }
+                                        button { display: none; }
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <h1>EyeCare Pro Hospital - Appointment Confirmation</h1>
+                                <p><strong>Appointment ID:</strong> ${this.appointmentId}</p>
+                                <p><strong>Date Printed:</strong> ${new Date().toLocaleString()}</p>
+                                
+                                <div class="appointment-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">Patient Name:</span>
+                                        <span class="detail-value">${this.form.firstName} ${this.form.lastName}</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Patient ID:</span>
+                                        <span class="detail-value">${this.form.patientId}</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Doctor:</span>
+                                        <span class="detail-value">${this.form.doctor}</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Appointment Date & Time:</span>
+                                        <span class="detail-value">${this.formatDateTime(this.form.appointmentDateTime)}</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Symptoms:</span>
+                                        <span class="detail-value">${this.getSymptomsDisplay()}</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Payment Method:</span>
+                                        <span class="detail-value">${this.getCardTypeDisplay(this.form.cardType)}</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">Total Amount:</span>
+                                        <span class="detail-value">$150.00</span>
+                                    </div>
+                                </div>
+                                
+                                <h3>Complete Appointment Data (JSON):</h3>
+                                <pre>${this.formattedJSON}</pre>
+                                
+                                <p style="margin-top: 30px; font-size: 0.9em; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 10px;">
+                                    <strong>Note:</strong> This is a computer-generated appointment confirmation. Please bring this confirmation with you to your appointment.
+                                </p>
+                            </body>
+                        </html>
+                    `;
+
+                        const printWindow = window.open('', '_blank');
+                        if (printWindow) {
+                            printWindow.document.write(printContent);
+                            printWindow.document.close();
+                            printWindow.focus();
+                            setTimeout(() => {
+                                printWindow.print();
+                            }, 500);
+                        } else {
+                            alert('Please allow pop-ups to print the confirmation.');
+                        }
+                    }
+                }
+            }).mount('#app');
+        }
+    </script>
+</body>
+
+</html>
