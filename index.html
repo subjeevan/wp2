@@ -18,6 +18,34 @@
     <div id="app">
         <!-- Header -->
         <header class="header">
+            <!-- Doctor Mascot -->
+            <div class="doctor-mascot">
+                <div class="speech-bubble">
+                    <div class="bubble-text">Get your eye checkup! 👁️</div>
+                </div>
+                <div class="doctor-character">
+                    <div class="doctor-head">
+                        <div class="doctor-hat"></div>
+                        <div class="doctor-face">
+                            <div class="doctor-eye left"></div>
+                            <div class="doctor-eye right"></div>
+                            <div class="doctor-glasses">
+                                <div class="glass-left"></div>
+                                <div class="glass-right"></div>
+                                <div class="glass-bridge"></div>
+                            </div>
+                            <div class="doctor-smile"></div>
+                        </div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="stethoscope"></div>
+                        <div class="coat-button"></div>
+                        <div class="coat-button"></div>
+                        <div class="coat-button"></div>
+                    </div>
+                </div>
+            </div>
+
             <div class="header-content">
                 <div class="student-info">
                     <h1>Eye Hospital Appointment System</h1>
@@ -37,6 +65,20 @@
                     <i class="fas fa-eye"></i>
                     <span>EyeCare Pro</span>
                 </div>
+
+                <!-- Audio Player -->
+                <div class="audio-player">
+                    <button type="button" class="audio-toggle" @click="toggleAudio"
+                        :class="{ 'playing': isAudioPlaying }">
+                        <i class="fas" :class="isAudioPlaying ? 'fa-stop' : 'fa-play'"></i>
+                        <span>{{ isAudioPlaying ? 'Stop' : 'Play' }} Relaxing Music</span>
+                    </button>
+                    <audio ref="backgroundAudio" loop>
+                        <source src="audio.mp3" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+
                 <button type="button" class="btn btn-info" @click="fillDummyData"
                     style="background: #06b6d4; border: none; padding: 0.5rem 1rem; border-radius: 6px; color: white; cursor: pointer; font-weight: 600;">
                     <i class="fas fa-database"></i> Dummy Data
