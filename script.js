@@ -11,21 +11,21 @@ createApp({
             isAudioPlaying: false,
             appointmentId: '',
             doctors: [
-                { id: 1, name: 'Dr. Sarah Johnson', specialization: 'Retina Specialist' },
-                { id: 2, name: 'Dr. Michael Chen', specialization: 'Cornea Specialist' },
-                { id: 3, name: 'Dr. Emily Rodriguez', specialization: 'Pediatric Ophthalmology' },
-                { id: 4, name: 'Dr. Robert Williams', specialization: 'Glaucoma Specialist' },
-                { id: 5, name: 'Dr. Lisa Thompson', specialization: 'Cataract Surgery' }
+                { id: 1, name: 'Dr. Sangita Sharma Bhandari', specialization: 'Retina Specialist' },
+                { id: 2, name: 'Dr. Puspa Shrestha', specialization: 'Cornea Specialist' },
+                { id: 3, name: 'Dr. Manisha Shrestha', specialization: 'Pediatric Ophthalmology' },
+                { id: 4, name: 'Dr. Ranjit Kumar Yadav', specialization: 'Glaucoma Specialist' },
+                { id: 5, name: 'Dr. Maria Gautam', specialization: 'Cataract Surgery' }
             ],
             filteredDoctors: [],
             errors: {},
             form: {
-                // Patient Info
+                // patient information
                 patientType: '',
                 patientId: '',
                 opdPaper: null,
 
-                // Personal Info
+                // personal details
                 firstName: '',
                 lastName: '',
                 dob: '',
@@ -38,27 +38,28 @@ createApp({
                 address: '',
                 zipCode: '',
 
-                // Medical Info
+                // medical related stuff
                 eyeCondition: '',
                 symptoms: [],
                 otherSymptom: '',
                 symptomDuration: '',
                 painLevel: 5,
                 eyeColor: '#8b4513',
+                tierRating: '',
                 medicalImage: null,
 
-                // Appointment
+                // appointment booking
                 doctorSearch: '',
                 doctor: '',
                 appointmentDateTime: '',
 
-                // Payment
+                // payment info
                 cardType: '',
                 cardNumber: '',
                 cvv: '',
                 paymentUrl: '',
 
-                // Terms & Options
+                // checkbox options
                 acceptTerms: false,
                 smsReminder: false,
                 newsletter: false
@@ -87,6 +88,7 @@ createApp({
                 symptomDuration: this.form.symptomDuration,
                 painLevel: this.form.painLevel,
                 eyeColor: this.form.eyeColor,
+                tierRating: this.form.tierRating,
                 doctor: this.form.doctor,
                 appointmentDateTime: this.form.appointmentDateTime,
                 appointmentDate: this.formatDateTime(this.form.appointmentDateTime),
@@ -105,20 +107,20 @@ createApp({
         },
         formattedJSONHtml() {
             const jsonString = this.formattedJSON;
-            // Simple syntax highlighting for JSON
+            // adding colors to json output
             return jsonString
                 .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-                    let cls = 'json-number';
+                    let cls = 'json-number_M25W7486';
                     if (/^"/.test(match)) {
                         if (/:$/.test(match)) {
-                            cls = 'json-key';
+                            cls = 'json-key_M25W7486';
                         } else {
-                            cls = 'json-string';
+                            cls = 'json-string_M25W7486';
                         }
                     } else if (/true|false/.test(match)) {
-                        cls = 'json-boolean';
+                        cls = 'json-boolean_M25W7486';
                     } else if (/null/.test(match)) {
-                        cls = 'json-null';
+                        cls = 'json-null_M25W7486';
                     }
                     return '<span class="' + cls + '">' + match + '</span>';
                 });
@@ -131,8 +133,8 @@ createApp({
     },
     mounted() {
         this.isLoaded = true;
-        this.showModal = false;  // Ensure modal is closed on page load
-        // Initialize current time immediately
+        this.showModal = false;  // make sure modal is hidden when page loads
+        // show current time right away
         const now = new Date();
         this.currentTime = now.toLocaleTimeString('en-US', {
             hour12: true,
@@ -140,7 +142,7 @@ createApp({
             minute: '2-digit',
             second: '2-digit'
         });
-        // Real-time clock
+        // update clock every second
         setInterval(() => {
             const now = new Date();
             this.currentTime = now.toLocaleTimeString('en-US', {
@@ -152,7 +154,7 @@ createApp({
         }, 1000);
     },
     methods: {
-        // Patient Type Handling
+        // handle patient type selection
         handlePatientTypeChange() {
             this.errors.patientType = '';
 
@@ -167,7 +169,7 @@ createApp({
             this.validateField('patientType');
         },
 
-        // Fill Dummy Data for Testing
+        // fill form with test data
         fillDummyData() {
             this.form = {
                 patientType: 'new',
@@ -190,6 +192,7 @@ createApp({
                 symptomDuration: '1-2 weeks',
                 painLevel: 5,
                 eyeColor: '#8b4513',
+                tierRating: 'gold',
                 medicalImage: null,
                 doctorSearch: '',
                 doctor: 'Dr. Sarah Johnson',
@@ -203,12 +206,12 @@ createApp({
                 newsletter: true
             };
 
-            // Clear errors
+            // remove all errors
             this.errors = {};
             alert('Dummy data filled successfully! Click Submit to test the form.');
         },
 
-        // Helper to get next week's date
+        // get date for next week
         getNextWeekDateTime() {
             const date = new Date();
             date.setDate(date.getDate() + 7);
@@ -216,7 +219,7 @@ createApp({
             return date.toISOString().slice(0, 16);
         },
 
-        // Field Validation - FIXED: Now properly shows errors
+        // check if field is valid
         validateField(field) {
             const value = this.form[field];
 
@@ -310,6 +313,9 @@ createApp({
                 case 'symptomDuration':
                     this.errors.symptomDuration = !value ? 'Please select symptom duration' : '';
                     break;
+                case 'tierRating':
+                    this.errors.tierRating = !value ? 'Please select a priority tier' : '';
+                    break;
                 case 'doctor':
                     this.errors.doctor = !value ? 'Please select a doctor' : '';
                     break;
@@ -366,7 +372,7 @@ createApp({
             }
         },
 
-        // Custom Validation Methods
+        // functions for input validation
         validateMobile() {
             const value = this.form.mobile.replace(/\D/g, '');
             this.form.mobile = value;
@@ -400,7 +406,7 @@ createApp({
             this.validateField('cvv');
         },
 
-        // Formatting Functions
+        // format inputs properly
         formatSocialSecurity(event) {
             let value = event.target.value.replace(/\D/g, '');
             if (value.length > 3) {
@@ -442,7 +448,7 @@ createApp({
             }
         },
 
-        // File Upload
+        // upload files
         handleFileUpload(event, field) {
             const file = event.target.files[0];
             if (file) {
@@ -455,7 +461,7 @@ createApp({
             }
         },
 
-        // Doctor Search
+        // search for doctors
         searchDoctors() {
             if (this.form.doctorSearch) {
                 this.filteredDoctors = this.doctors.filter(doctor =>
@@ -480,7 +486,7 @@ createApp({
             this.validateField('doctor');
         },
 
-        // Symptoms
+        // handle symptom selection
         toggleSymptom(symptom) {
             const index = this.form.symptoms.indexOf(symptom);
             if (index === -1) {
@@ -515,7 +521,7 @@ createApp({
             }
         },
 
-        // Form Submission - Shows modal on success
+        // submit the form
         async submitForm() {
             const requiredFields = [
                 'patientType', 'patientId', 'firstName', 'lastName', 'dob', 'gender',
@@ -542,7 +548,7 @@ createApp({
 
             if (hasErrors) {
                 alert('Please fix all validation errors before submitting.');
-                // Scroll to first error
+                // scroll to first error field
                 const firstErrorField = Object.keys(this.errors).find(field => this.errors[field]);
                 if (firstErrorField) {
                     const element = document.querySelector(`[v-model="form.${firstErrorField}"]`);
@@ -558,17 +564,17 @@ createApp({
             this.isSubmitting = true;
 
             setTimeout(() => {
-                this.showModal = true; // Show modal on success
+                this.showModal = true; // show success popup
                 this.isSubmitting = false;
             }, 1500);
         },
 
-        // Close Modal
+        // close popup
         closeModal() {
             this.showModal = false;
         },
 
-        // Reset Form
+        // reset all fields
         resetForm() {
             if (confirm('Are you sure you want to reset all form data?')) {
                 this.form = {
@@ -644,7 +650,7 @@ createApp({
             }
         },
 
-        // Print Data
+        // print appointment details
         printData() {
             const printContent = `
                         <html>
@@ -723,7 +729,7 @@ createApp({
             }
         },
 
-        // Toggle Audio Playback
+        // play or stop music
         toggleAudio() {
             const audio = this.$refs.backgroundAudio;
             if (this.isAudioPlaying) {

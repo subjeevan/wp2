@@ -17,59 +17,64 @@
 <body>
     <div id="app">
         <!-- Header -->
-        <header class="header">
-            <!-- Doctor Mascot -->
-            <div class="doctor-mascot">
-                <div class="speech-bubble">
-                    <div class="bubble-text">Get your eye checkup! 👁️</div>
-                </div>
-                <div class="doctor-character">
-                    <div class="doctor-head">
-                        <div class="doctor-hat"></div>
-                        <div class="doctor-face">
-                            <div class="doctor-eye left"></div>
-                            <div class="doctor-eye right"></div>
-                            <div class="doctor-glasses">
-                                <div class="glass-left"></div>
-                                <div class="glass-right"></div>
-                                <div class="glass-bridge"></div>
+        <header class="header_M25W7486">
+            <div class="header-wrapper_M25W7486">
+                <!-- Doctor Mascot -->
+                <div class="doctor-mascot_M25W7486">
+                    <div class="speech-bubble_M25W7486">
+                        <div class="bubble-text_M25W7486">Get your eye checkup! 👁️</div>
+                    </div>
+                    <div class="doctor-character_M25W7486">
+                        <div class="doctor-head_M25W7486">
+                            <div class="doctor-hat_M25W7486"></div>
+                            <div class="doctor-face_M25W7486">
+                                <div class="doctor-eye_M25W7486 left_M25W7486"></div>
+                                <div class="doctor-eye_M25W7486 right_M25W7486"></div>
+                                <div class="doctor-glasses_M25W7486">
+                                    <div class="glass-left_M25W7486"></div>
+                                    <div class="glass-right_M25W7486"></div>
+                                    <div class="glass-bridge_M25W7486"></div>
+                                </div>
+                                <div class="doctor-smile_M25W7486"></div>
                             </div>
-                            <div class="doctor-smile"></div>
+                        </div>
+                        <div class="doctor-body_M25W7486">
+                            <div class="stethoscope_M25W7486"></div>
+                            <div class="coat-button_M25W7486"></div>
+                            <div class="coat-button_M25W7486"></div>
+                            <div class="coat-button_M25W7486"></div>
                         </div>
                     </div>
-                    <div class="doctor-body">
-                        <div class="stethoscope"></div>
-                        <div class="coat-button"></div>
-                        <div class="coat-button"></div>
-                        <div class="coat-button"></div>
+                </div>
+
+                <div class="header-content_M25W7486">
+                    <div class="student-info_M25W7486">
+                        <h1>Eye Hospital Appointment System</h1>
+                        <div class="student-id_M25W7486">Jeevan Subedi - M25W7486</div>
                     </div>
                 </div>
-            </div>
 
-            <div class="header-content">
-                <div class="student-info">
-                    <h1>Eye Hospital Appointment System</h1>
-                    <div class="student-id">Jeevan Subedi - M25W7486</div>
-                </div>
-                <div class="real-time-clock">
-                    <i class="fas fa-clock"></i>
-                    {{ currentTime }}
+                <div class="real-time-clock_M25W7486">
+                    <div>
+                        <i class="fas fa-clock"></i>
+                        {{ currentTime }}
+                    </div>
                 </div>
             </div>
         </header>
 
         <!-- Navigation -->
-        <nav class="nav">
-            <div class="nav-content">
-                <div class="nav-logo">
+        <nav class="nav_M25W7486">
+            <div class="nav_M25W7486-content_M25W7486">
+                <div class="nav_M25W7486-logo_M25W7486">
                     <i class="fas fa-eye"></i>
-                    <span>EyeCare Pro</span>
+                    <span>Bharatpur Eye Hospital</span>
                 </div>
 
                 <!-- Audio Player -->
-                <div class="audio-player">
-                    <button type="button" class="audio-toggle" @click="toggleAudio"
-                        :class="{ 'playing': isAudioPlaying }">
+                <div class="audio-player_M25W7486">
+                    <button type="button" class="audio-toggle_M25W7486" @click="toggleAudio"
+                        :class="{ 'playing_M25W7486': isAudioPlaying }">
                         <i class="fas" :class="isAudioPlaying ? 'fa-stop' : 'fa-play'"></i>
                         <span>{{ isAudioPlaying ? 'Stop' : 'Play' }} Relaxing Music</span>
                     </button>
@@ -79,7 +84,7 @@
                     </audio>
                 </div>
 
-                <button type="button" class="btn btn-info" @click="fillDummyData"
+                <button type="button" class="btn btn_M25W7486-info_M25W7486" @click="fillDummyData"
                     style="background: #06b6d4; border: none; padding: 0.5rem 1rem; border-radius: 6px; color: white; cursor: pointer; font-weight: 600;">
                     <i class="fas fa-database"></i> Dummy Data
                 </button>
@@ -87,40 +92,43 @@
         </nav>
 
         <!-- Main Form -->
-        <main class="main-container">
+        <main class="main-container_M25W7486">
             <form @submit.prevent="submitForm">
                 <!-- Patient Type Section -->
-                <div class="form-card">
-                    <h2 class="card-title"><i class="fas fa-user"></i> Patient Information</h2>
+                <div class="form-card_M25W7486">
+                    <h2 class="card-title_M25W7486"><i class="fas fa-user"></i> Patient Information
+                    </h2>
 
-                    <div class="patient-type-section">
-                        <div class="form-group" style="flex: 1;">
-                            <label class="form-label required">Patient Type</label>
-                            <select class="form-input" v-model="form.patientType" @change="handlePatientTypeChange"
-                                @blur="validateField('patientType')">
+                    <div class="patient-type-section_M25W7486">
+                        <div class="form-group_M25W7486" style="flex: 1;">
+                            <label class="form-label_M25W7486 required_M25W7486">Patient Type</label>
+                            <select class="form-input_M25W7486" v-model="form.patientType"
+                                @change="handlePatientTypeChange" @blur="validateField('patientType')">
                                 <option value="">Select Type</option>
                                 <option value="new">New Patient</option>
                                 <option value="old">Old Patient</option>
                             </select>
-                            <div class="error-message" :class="errors.patientType ? 'visible' : 'hidden'">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.patientType ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.patientType }}
                             </div>
                         </div>
 
-                        <div class="form-group" style="flex: 1;">
-                            <label class="form-label required">Patient ID</label>
-                            <input type="text" class="form-input" v-model="form.patientId"
+                        <div class="form-group_M25W7486" style="flex: 1;">
+                            <label class="form-label_M25W7486 required_M25W7486">Patient ID</label>
+                            <input type="text" class="form-input_M25W7486" v-model="form.patientId"
                                 :disabled="form.patientType === 'new'" @input="validateField('patientId')"
                                 @blur="validateField('patientId')"
                                 :placeholder="form.patientType === 'old' ? 'PAT-123456-789' : 'Auto-generated for new patients'">
-                            <div class="error-message" :class="errors.patientId ? 'visible' : 'hidden'">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.patientId ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.patientId }}
                             </div>
-                            <div class="success-message"
+                            <div class="success_M25W7486-message_M25W7486"
                                 v-if="form.patientType === 'new' && form.patientId && !errors.patientId">
                                 <i class="fas fa-check-circle"></i> New ID generated
                             </div>
-                            <div class="success-message"
+                            <div class="success_M25W7486-message_M25W7486"
                                 v-if="form.patientType === 'old' && !errors.patientId && form.patientId">
                                 <i class="fas fa-check-circle"></i> Valid Patient ID
                             </div>
@@ -128,16 +136,16 @@
                     </div>
 
                     <!-- OPD Paper Upload (only for old patients) -->
-                    <div class="opd-section" v-if="form.patientType === 'old'">
-                        <div class="form-group">
-                            <label class="form-label">Previous OPD Paper (PDF)</label>
-                            <div class="file-upload">
+                    <div class="opd-section_M25W7486" v-if="form.patientType === 'old'">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486">Previous OPD Paper (PDF)</label>
+                            <div class="file-upload_M25W7486">
                                 <input type="file" accept=".pdf" @change="handleFileUpload($event, 'opdPaper')">
-                                <div class="form-input" style="cursor: pointer;">
+                                <div class="form-input_M25W7486" style="cursor: pointer;">
                                     <i class="fas fa-upload"></i> Click to upload PDF file
                                 </div>
                             </div>
-                            <div class="file-preview" v-if="form.opdPaper">
+                            <div class="file-preview_M25W7486" v-if="form.opdPaper">
                                 <i class="fas fa-file-pdf"></i> {{ form.opdPaper.name }}
                             </div>
                         </div>
@@ -145,126 +153,141 @@
                 </div>
 
                 <!-- Personal Information -->
-                <div class="form-card">
-                    <h2 class="card-title"><i class="fas fa-id-card"></i> Personal Details</h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label required">First Name</label>
-                            <input type="text" class="form-input" v-model="form.firstName" maxlength="20"
-                                @input="validateField('firstName')" @blur="validateField('firstName')"
-                                placeholder="Enter first name">
-                            <div class="error-message" :class="errors.firstName ? 'visible' : 'hidden'">
+                <div class="form-card_M25W7486">
+                    <h2 class="card-title_M25W7486"><i class="fas fa-id-card"></i> Personal Details
+                    </h2>
+                    <div class="form-grid_M25W7486">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">First Name</label>
+                            <input type="text" class="form-input_M25W7486" :class="{ error_M25W7486: errors.firstName }"
+                                v-model="form.firstName" maxlength="20" @input="validateField('firstName')"
+                                @blur="validateField('firstName')" placeholder="Enter first name">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.firstName ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.firstName }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">Last Name</label>
-                            <input type="text" class="form-input" v-model="form.lastName" maxlength="20"
-                                @input="validateField('lastName')" @blur="validateField('lastName')"
-                                placeholder="Enter last name">
-                            <div class="error-message" :class="errors.lastName ? 'visible' : 'hidden'">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Last Name</label>
+                            <input type="text" class="form-input_M25W7486" :class="{ error_M25W7486: errors.lastName }"
+                                v-model="form.lastName" maxlength="20" @input="validateField('lastName')"
+                                @blur="validateField('lastName')" placeholder="Enter last name">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.lastName ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.lastName }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">Date of Birth</label>
-                            <input type="date" class="form-input" v-model="form.dob" @change="validateField('dob')"
-                                @blur="validateField('dob')">
-                            <div class="error-message" :class="errors.dob ? 'visible' : 'hidden'">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Date of Birth</label>
+                            <input type="date" class="form-input_M25W7486" :class="{ error_M25W7486: errors.dob }"
+                                v-model="form.dob" @change="validateField('dob')" @blur="validateField('dob')">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.dob ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.dob }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">Gender</label>
-                            <div class="radio-group">
-                                <label class="radio-label" :class="{active: form.gender === 'male'}"
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Gender</label>
+                            <div class="radio-group_M25W7486">
+                                <label class="radio-label_M25W7486" :class="{active_M25W7486: form.gender === 'male'}"
                                     @click="form.gender = 'male'; validateField('gender')">
                                     <i class="fas fa-mars"></i> Male
                                 </label>
-                                <label class="radio-label" :class="{active: form.gender === 'female'}"
+                                <label class="radio-label_M25W7486" :class="{active_M25W7486: form.gender === 'female'}"
                                     @click="form.gender = 'female'; validateField('gender')">
                                     <i class="fas fa-venus"></i> Female
                                 </label>
-                                <label class="radio-label" :class="{active: form.gender === 'other'}"
+                                <label class="radio-label_M25W7486" :class="{active_M25W7486: form.gender === 'other'}"
                                     @click="form.gender = 'other'; validateField('gender')">
                                     <i class="fas fa-transgender-alt"></i> Other
                                 </label>
                             </div>
-                            <div class="error-message" :class="errors.gender ? 'visible' : 'hidden'">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.gender ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.gender }}
                             </div>
                         </div>
                     </div>
 
                     <!-- Social Security -->
-                    <div class="social-security-section">
-                        <div class="toggle-container">
-                            <label class="toggle-switch">
+                    <div class="social-security-section_M25W7486">
+                        <div class="toggle-container_M25W7486">
+                            <label class="toggle-switch_M25W7486">
                                 <input type="checkbox" v-model="form.hasSocialSecurity" @change="toggleSocialSecurity">
-                                <span class="toggle-slider"></span>
+                                <span class="toggle-slider_M25W7486"></span>
                             </label>
                             <span>I have Social Security Number</span>
                         </div>
 
-                        <div class="form-group" v-if="form.hasSocialSecurity">
-                            <label class="form-label required">Social Security Number</label>
-                            <input type="text" class="form-input" v-model="form.socialSecurity"
+                        <div class="form-group_M25W7486" v-if="form.hasSocialSecurity">
+                            <label class="form-label_M25W7486 required_M25W7486">Social Security Number</label>
+                            <input type="text" class="form-input_M25W7486"
+                                :class="{ error_M25W7486: errors.socialSecurity }" v-model="form.socialSecurity"
                                 placeholder="XXX-XX-XXXX" maxlength="11" @input="formatSocialSecurity($event)"
                                 @blur="validateField('socialSecurity')">
-                            <div class="error-message" :class="errors.socialSecurity ? 'visible' : 'hidden'">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.socialSecurity ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.socialSecurity }}
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label required">Mobile Number</label>
-                            <input type="tel" class="form-input" v-model="form.mobile" maxlength="10"
-                                @input="validateMobile" @blur="validateField('mobile')" placeholder="10 digits only">
-                            <div class="error-message" :class="errors.mobile ? 'visible' : 'hidden'">
+                    <div class="form-grid_M25W7486">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Mobile Number</label>
+                            <input type="tel" class="form-input_M25W7486" :class="{ error_M25W7486: errors.mobile }"
+                                v-model="form.mobile" maxlength="10" @input="validateMobile"
+                                @blur="validateField('mobile')" placeholder="10 digits only">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.mobile ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.mobile }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">Email</label>
-                            <input type="email" class="form-input" v-model="form.email" @input="validateField('email')"
-                                @blur="validateField('email')" placeholder="example@domain.com">
-                            <div class="error-message" :class="errors.email ? 'visible' : 'hidden'">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Email</label>
+                            <input type="email" class="form-input_M25W7486" :class="{ error_M25W7486: errors.email }"
+                                v-model="form.email" @input="validateField('email')" @blur="validateField('email')"
+                                placeholder="example@domain.com">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.email ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.email }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">City</label>
-                            <input type="text" class="form-input" v-model="form.city" @input="validateCity"
-                                @blur="validateField('city')" placeholder="City name (letters only)">
-                            <div class="error-message" :class="errors.city ? 'visible' : 'hidden'">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">City</label>
+                            <input type="text" class="form-input_M25W7486" :class="{ error_M25W7486: errors.city }"
+                                v-model="form.city" @input="validateCity" @blur="validateField('city')"
+                                placeholder="City name (letters only)">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.city ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.city }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">Address</label>
-                            <textarea class="form-input" v-model="form.address" maxlength="200" rows="3"
-                                @input="validateField('address')" @blur="validateField('address')"
-                                placeholder="Enter your complete address"></textarea>
-                            <div class="char-counter">{{ form.address.length }}/200</div>
-                            <div class="error-message" :class="errors.address ? 'visible' : 'hidden'">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Address</label>
+                            <textarea class="form-input_M25W7486" :class="{ error_M25W7486: errors.address }"
+                                v-model="form.address" maxlength="200" rows="3" @input="validateField('address')"
+                                @blur="validateField('address')" placeholder="Enter your complete address"></textarea>
+                            <div class="char-counter_M25W7486">{{ form.address.length }}/200</div>
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.address ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.address }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">ZIP/Postal Code</label>
-                            <input type="text" class="form-input" v-model="form.zipCode" maxlength="10"
-                                @input="formatZipCode" @blur="validateField('zipCode')"
-                                placeholder="Format: 12345 or 12345-6789">
-                            <div class="error-message" :class="errors.zipCode ? 'visible' : 'hidden'">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">ZIP/Postal Code</label>
+                            <input type="text" class="form-input_M25W7486" :class="{ error_M25W7486: errors.zipCode }"
+                                v-model="form.zipCode" maxlength="10" @input="formatZipCode"
+                                @blur="validateField('zipCode')" placeholder="Format: 12345 or 12345-6789">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.zipCode ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.zipCode }}
                             </div>
                         </div>
@@ -272,63 +295,35 @@
                 </div>
 
                 <!-- Medical Information -->
-                <div class="form-card">
-                    <h2 class="card-title"><i class="fas fa-file-medical"></i> Medical Information</h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Eye Condition</label>
-                            <div class="radio-group">
-                                <label class="radio-label" :class="{active: form.eyeCondition === 'myopia'}"
+                <div class="form-card_M25W7486">
+                    <h2 class="card-title_M25W7486"><i class="fas fa-file-medical"></i> Medical
+                        Information</h2>
+
+                    <div class="form-grid_M25W7486">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486">Eye Condition</label>
+                            <div class="radio-group_M25W7486">
+                                <label class="radio-label_M25W7486"
+                                    :class="{active_M25W7486: form.eyeCondition === 'myopia'}"
                                     @click="form.eyeCondition = 'myopia'">
                                     <i class="fas fa-eye"></i> Myopia
                                 </label>
-                                <label class="radio-label" :class="{active: form.eyeCondition === 'hyperopia'}"
+                                <label class="radio-label_M25W7486"
+                                    :class="{active_M25W7486: form.eyeCondition === 'hyperopia'}"
                                     @click="form.eyeCondition = 'hyperopia'">
                                     <i class="fas fa-eye"></i> Hyperopia
                                 </label>
-                                <label class="radio-label" :class="{active: form.eyeCondition === 'astigmatism'}"
+                                <label class="radio-label_M25W7486"
+                                    :class="{active_M25W7486: form.eyeCondition === 'astigmatism'}"
                                     @click="form.eyeCondition = 'astigmatism'">
                                     <i class="fas fa-eye"></i> Astigmatism
                                 </label>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">Symptoms</label>
-                            <div class="checkbox-group">
-                                <label class="checkbox-label" :class="{active: form.symptoms.includes('blurred')}"
-                                    @click="toggleSymptom('blurred')">
-                                    <i class="fas fa-low-vision"></i> Blurred Vision
-                                </label>
-                                <label class="checkbox-label" :class="{active: form.symptoms.includes('pain')}"
-                                    @click="toggleSymptom('pain')">
-                                    <i class="fas fa-tachometer-alt"></i> Eye Pain
-                                </label>
-                                <label class="checkbox-label" :class="{active: form.symptoms.includes('headache')}"
-                                    @click="toggleSymptom('headache')">
-                                    <i class="fas fa-head-side-virus"></i> Headaches
-                                </label>
-                                <label class="checkbox-label" :class="{active: form.symptoms.includes('other')}"
-                                    @click="toggleSymptom('other')">
-                                    <i class="fas fa-plus-circle"></i> Other
-                                </label>
-                            </div>
-                            <div class="error-message" :class="errors.symptoms ? 'visible' : 'hidden'">
-                                <i class="fas fa-exclamation-circle"></i> {{ errors.symptoms }}
-                            </div>
-
-                            <!-- Other Symptom Input -->
-                            <div class="other-symptom-input" v-if="form.symptoms.includes('other')">
-                                <label class="form-label">Please specify other symptom:</label>
-                                <input type="text" class="form-input" v-model="form.otherSymptom"
-                                    placeholder="Describe your symptom..." maxlength="100">
-                                <div class="char-counter">{{ form.otherSymptom.length }}/100</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label required">Symptom Duration</label>
-                            <select class="form-input" v-model="form.symptomDuration"
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Symptom Duration</label>
+                            <select class="form-input_M25W7486" v-model="form.symptomDuration"
                                 @change="validateField('symptomDuration')" @blur="validateField('symptomDuration')">
                                 <option value="">Select Duration</option>
                                 <option value="1week">Less than 1 week</option>
@@ -336,20 +331,61 @@
                                 <option value="6months">1-6 months</option>
                                 <option value="6plus">More than 6 months</option>
                             </select>
-                            <div class="error-message" :class="errors.symptomDuration ? 'visible' : 'hidden'">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.symptomDuration ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.symptomDuration }}
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">Pain Level</label>
+                    <div class="form-group_M25W7486">
+                        <label class="form-label_M25W7486 required_M25W7486">Symptoms</label>
+                        <div class="checkbox-group_M25W7486">
+                            <label class="checkbox-label_M25W7486"
+                                :class="{active_M25W7486: form.symptoms.includes('blurred')}"
+                                @click="toggleSymptom('blurred')">
+                                <i class="fas fa-low-vision"></i> Blurred Vision
+                            </label>
+                            <label class="checkbox-label_M25W7486"
+                                :class="{active_M25W7486: form.symptoms.includes('pain')}"
+                                @click="toggleSymptom('pain')">
+                                <i class="fas fa-tachometer-alt"></i> Eye Pain
+                            </label>
+                            <label class="checkbox-label_M25W7486"
+                                :class="{active_M25W7486: form.symptoms.includes('headache')}"
+                                @click="toggleSymptom('headache')">
+                                <i class="fas fa-head-side-virus"></i> Headaches
+                            </label>
+                            <label class="checkbox-label_M25W7486"
+                                :class="{active_M25W7486: form.symptoms.includes('other')}"
+                                @click="toggleSymptom('other')">
+                                <i class="fas fa-plus-circle"></i> Other
+                            </label>
+                        </div>
+                        <div class="error_M25W7486-message_M25W7486"
+                            :class="errors.symptoms ? 'visible_M25W7486' : 'hidden_M25W7486'">
+                            <i class="fas fa-exclamation-circle"></i> {{ errors.symptoms }}
+                        </div>
+
+                        <!-- Other Symptom Input -->
+                        <div class="other-symptom-input_M25W7486" v-if="form.symptoms.includes('other')">
+                            <label class="form-label_M25W7486">Please specify other symptom:</label>
+                            <input type="text" class="form-input_M25W7486" v-model="form.otherSymptom"
+                                placeholder="Describe your symptom..." maxlength="100">
+                            <div class="char-counter_M25W7486">{{ form.otherSymptom.length }}/100</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid_M25W7486">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Pain Level</label>
                             <div style="text-align: center; margin-bottom: 0.5rem;">
                                 <span style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">
                                     {{ form.painLevel }}/10
                                 </span>
                             </div>
-                            <input type="range" class="form-input" v-model="form.painLevel" min="0" max="10" step="1"
-                                style="padding: 0; height: 8px;">
+                            <input type="range" class="form-input_M25W7486" v-model="form.painLevel" min="0" max="10"
+                                step="1" style="padding: 0; height: 8px;">
                             <div
                                 style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--gray);">
                                 <span>No Pain</span>
@@ -357,143 +393,192 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Eye Color</label>
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486">Eye Color</label>
                             <div style="display: flex; align-items: center; gap: 1rem;">
-                                <input type="color" class="color-picker" v-model="form.eyeColor">
+                                <input type="color" class="color-picker_M25W7486" v-model="form.eyeColor">
                                 <span style="font-weight: 600;">{{ form.eyeColor.toUpperCase() }}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Patient Priority Tier</label>
+                            <div class="badge-tier-selector_M25W7486">
+                                <div class="tier-badge_M25W7486 bronze_M25W7486"
+                                    :class="{active_M25W7486: form.tierRating === 'bronze'}"
+                                    @click="form.tierRating = 'bronze'; validateField('tierRating')">
+                                    <div class="badge-icon_M25W7486">🥉</div>
+                                    <div class="badge-name_M25W7486">Bronze</div>
+                                    <div class="badge-desc_M25W7486">Standard</div>
+                                </div>
+                                <div class="tier-badge_M25W7486 silver_M25W7486"
+                                    :class="{active_M25W7486: form.tierRating === 'silver'}"
+                                    @click="form.tierRating = 'silver'; validateField('tierRating')">
+                                    <div class="badge-icon_M25W7486">🥈</div>
+                                    <div class="badge-name_M25W7486">Silver</div>
+                                    <div class="badge-desc_M25W7486">Priority</div>
+                                </div>
+                                <div class="tier-badge_M25W7486 gold_M25W7486"
+                                    :class="{active_M25W7486: form.tierRating === 'gold'}"
+                                    @click="form.tierRating = 'gold'; validateField('tierRating')">
+                                    <div class="badge-icon_M25W7486">🥇</div>
+                                    <div class="badge-name_M25W7486">Gold</div>
+                                    <div class="badge-desc_M25W7486">VIP</div>
+                                </div>
+                                <div class="tier-badge_M25W7486 platinum_M25W7486"
+                                    :class="{active_M25W7486: form.tierRating === 'platinum'}"
+                                    @click="form.tierRating = 'platinum'; validateField('tierRating')">
+                                    <div class="badge-icon_M25W7486">💎</div>
+                                    <div class="badge-name_M25W7486">Platinum</div>
+                                    <div class="badge-desc_M25W7486">Premium</div>
+                                </div>
+                            </div>
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.tierRating ? 'visible_M25W7486' : 'hidden_M25W7486'">
+                                <i class="fas fa-exclamation-circle"></i> {{ errors.tierRating }}
                             </div>
                         </div>
                     </div>
 
                     <!-- Attachment -->
-                    <div class="form-group">
-                        <label class="form-label">Medical Attachment (Image)</label>
-                        <div class="file-upload">
+                    <div class="form-group_M25W7486">
+                        <label class="form-label_M25W7486">Medical Attachment (Image)</label>
+                        <div class="file-upload_M25W7486">
                             <input type="file" accept="image/*" @change="handleFileUpload($event, 'medicalImage')">
-                            <div class="form-input" style="cursor: pointer;">
+                            <div class="form-input_M25W7486" style="cursor: pointer;">
                                 <i class="fas fa-image"></i> Click to upload image
                             </div>
                         </div>
-                        <div class="file-preview" v-if="form.medicalImage">
+                        <div class="file-preview_M25W7486" v-if="form.medicalImage">
                             <i class="fas fa-file-image"></i> {{ form.medicalImage.name }}
                         </div>
                     </div>
                 </div>
 
                 <!-- Appointment Details -->
-                <div class="form-card">
-                    <h2 class="card-title"><i class="fas fa-calendar-alt"></i> Appointment Details</h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label required">Select Doctor</label>
-                            <div class="doctor-search">
-                                <input type="text" class="form-input" v-model="form.doctorSearch" @input="searchDoctors"
-                                    @focus="showDoctorSuggestions = true"
+                <div class="form-card_M25W7486">
+                    <h2 class="card-title_M25W7486"><i class="fas fa-calendar-alt"></i> Appointment
+                        Details</h2>
+                    <div class="form-grid_M25W7486">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Select Doctor</label>
+                            <div class="doctor-search_M25W7486">
+                                <input type="text" class="form-input_M25W7486" v-model="form.doctorSearch"
+                                    @input="searchDoctors" @focus="showDoctorSuggestions = true"
                                     @blur="hideDoctorSuggestions; validateField('doctor')"
                                     placeholder="Search for a doctor...">
-                                <div class="doctor-suggestions" v-if="showDoctorSuggestions && filteredDoctors.length">
-                                    <div class="doctor-suggestion" v-for="doctor in filteredDoctors" :key="doctor.id"
-                                        @mousedown="selectDoctor(doctor)">
+                                <div class="doctor-suggestions_M25W7486"
+                                    v-if="showDoctorSuggestions && filteredDoctors.length">
+                                    <div class="doctor-suggestion_M25W7486" v-for="doctor in filteredDoctors"
+                                        :key="doctor.id" @mousedown="selectDoctor(doctor)">
                                         <strong>{{ doctor.name }}</strong><br>
                                         <small>{{ doctor.specialization }}</small>
                                     </div>
                                 </div>
                             </div>
-                            <div class="error-message" :class="errors.doctor ? 'visible' : 'hidden'">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.doctor ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.doctor }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">Appointment Date & Time</label>
-                            <input type="datetime-local" class="form-input" v-model="form.appointmentDateTime"
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Appointment Date & Time</label>
+                            <input type="datetime-local" class="form-input_M25W7486" v-model="form.appointmentDateTime"
                                 :min="minDateTime" @change="validateField('appointmentDateTime')"
                                 @blur="validateField('appointmentDateTime')">
-                            <div class="error-message" :class="errors.appointmentDateTime ? 'visible' : 'hidden'">
-                                <i class="fas fa-exclamation-circle"></i> {{ errors.appointmentDateTime }}
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.appointmentDateTime ? 'visible_M25W7486' : 'hidden_M25W7486'">
+                                <i class="fas fa-exclamation-circle"></i> {{
+                                errors.appointmentDateTime }}
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Payment Details -->
-                <div class="form-card">
-                    <h2 class="card-title"><i class="fas fa-credit-card"></i> Payment Details</h2>
+                <div class="form-card_M25W7486">
+                    <h2 class="card-title_M25W7486"><i class="fas fa-credit-card"></i> Payment Details
+                    </h2>
 
-                    <div class="form-group">
-                        <label class="form-label required">Card Type</label>
-                        <div class="card-types">
-                            <label class="card-type" :class="{active: form.cardType === 'visa'}"
+                    <div class="form-group_M25W7486">
+                        <label class="form-label_M25W7486 required_M25W7486">Card Type</label>
+                        <div class="card-types_M25W7486">
+                            <label class="card-type_M25W7486" :class="{active_M25W7486: form.cardType === 'visa'}"
                                 @click="form.cardType = 'visa'; validateField('cardType')">
                                 <i class="fab fa-cc-visa" style="color: #1a1f71; font-size: 1.2rem;"></i>
                                 <span>Visa</span>
                             </label>
-                            <label class="card-type" :class="{active: form.cardType === 'mastercard'}"
+                            <label class="card-type_M25W7486" :class="{active_M25W7486: form.cardType === 'mastercard'}"
                                 @click="form.cardType = 'mastercard'; validateField('cardType')">
                                 <i class="fab fa-cc-mastercard" style="color: #eb001b; font-size: 1.2rem;"></i>
                                 <span>MasterCard</span>
                             </label>
-                            <label class="card-type" :class="{active: form.cardType === 'online'}"
+                            <label class="card-type_M25W7486" :class="{active_M25W7486: form.cardType === 'online'}"
                                 @click="form.cardType = 'online'; validateField('cardType')">
                                 <i class="fas fa-globe" style="color: var(--primary); font-size: 1.2rem;"></i>
                                 <span>Online Payment</span>
                             </label>
                         </div>
-                        <div class="error-message" :class="errors.cardType ? 'visible' : 'hidden'">
+                        <div class="error_M25W7486-message_M25W7486"
+                            :class="errors.cardType ? 'visible_M25W7486' : 'hidden_M25W7486'">
                             <i class="fas fa-exclamation-circle"></i> {{ errors.cardType }}
                         </div>
                     </div>
 
-                    <div v-if="form.cardType === 'visa' || form.cardType === 'mastercard'" class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label required">Card Number</label>
-                            <input type="text" class="form-input" v-model="form.cardNumber" maxlength="19"
+                    <div v-if="form.cardType === 'visa' || form.cardType === 'mastercard'" class="form-grid_M25W7486">
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">Card Number</label>
+                            <input type="text" class="form-input_M25W7486" v-model="form.cardNumber" maxlength="19"
                                 @input="formatCardNumber" @blur="validateField('cardNumber')"
                                 placeholder="XXXX-XXXX-XXXX-XXXX">
-                            <div class="error-message" :class="errors.cardNumber ? 'visible' : 'hidden'">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.cardNumber ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.cardNumber }}
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label required">CVV</label>
-                            <input type="password" class="form-input" v-model="form.cvv" maxlength="3"
+                        <div class="form-group_M25W7486">
+                            <label class="form-label_M25W7486 required_M25W7486">CVV</label>
+                            <input type="password" class="form-input_M25W7486" v-model="form.cvv" maxlength="3"
                                 @input="validateCVV" @blur="validateField('cvv')" placeholder="3 digits">
-                            <div class="error-message" :class="errors.cvv ? 'visible' : 'hidden'">
+                            <div class="error_M25W7486-message_M25W7486"
+                                :class="errors.cvv ? 'visible_M25W7486' : 'hidden_M25W7486'">
                                 <i class="fas fa-exclamation-circle"></i> {{ errors.cvv }}
                             </div>
                         </div>
                     </div>
 
-                    <div v-if="form.cardType === 'online'" class="form-group">
-                        <label class="form-label required">Payment URL</label>
-                        <input type="url" class="form-input" v-model="form.paymentUrl"
+                    <div v-if="form.cardType === 'online'" class="form-group_M25W7486">
+                        <label class="form-label_M25W7486 required_M25W7486">Payment URL</label>
+                        <input type="url" class="form-input_M25W7486" v-model="form.paymentUrl"
                             @input="validateField('paymentUrl')" @blur="validateField('paymentUrl')"
                             placeholder="https://payment.example.com">
-                        <div class="error-message" :class="errors.paymentUrl ? 'visible' : 'hidden'">
+                        <div class="error_M25W7486-message_M25W7486"
+                            :class="errors.paymentUrl ? 'visible_M25W7486' : 'hidden_M25W7486'">
                             <i class="fas fa-exclamation-circle"></i> {{ errors.paymentUrl }}
                         </div>
                     </div>
                 </div>
 
                 <!-- Terms & Additional Options -->
-                <div class="form-card">
-                    <div class="form-group">
-                        <div class="toggle-container">
-                            <label class="toggle-switch">
+                <div class="form-card_M25W7486">
+                    <div class="form-group_M25W7486">
+                        <div class="toggle-container_M25W7486">
+                            <label class="toggle-switch_M25W7486">
                                 <input type="checkbox" v-model="form.acceptTerms"
                                     @change="validateField('acceptTerms')">
-                                <span class="toggle-slider"></span>
+                                <span class="toggle-slider_M25W7486"></span>
                             </label>
                             <span style="font-weight: 600;">I accept the Terms & Conditions</span>
                         </div>
-                        <div class="error-message" :class="errors.acceptTerms ? 'visible' : 'hidden'">
+                        <div class="error_M25W7486-message_M25W7486"
+                            :class="errors.acceptTerms ? 'visible_M25W7486' : 'hidden_M25W7486'">
                             <i class="fas fa-exclamation-circle"></i> {{ errors.acceptTerms }}
                         </div>
 
                         <!-- Terms and Conditions Content -->
-                        <div class="terms-box" v-if="form.acceptTerms">
+                        <div class="terms-box_M25W7486" v-if="form.acceptTerms">
                             <h4>EyeCare Pro Hospital Terms & Conditions</h4>
                             <p>By accepting these terms, you agree to:</p>
                             <ul>
@@ -517,29 +602,29 @@
                     </div>
 
                     <!-- SMS and Newsletter checkboxes -->
-                    <div class="checkbox-group" style="margin-top: 1.5rem;">
-                        <div class="custom-checkbox" @click="form.smsReminder = !form.smsReminder">
+                    <div class="checkbox-group_M25W7486" style="margin-top: 1.5rem;">
+                        <div class="custom-checkbox_M25W7486" @click="form.smsReminder = !form.smsReminder">
                             <input type="checkbox" v-model="form.smsReminder" hidden>
-                            <span class="checkmark"></span>
+                            <span class="checkmark_M25W7486"></span>
                             <span><i class="fas fa-sms"></i> SMS Reminders</span>
                         </div>
-                        <div class="custom-checkbox" @click="form.newsletter = !form.newsletter">
+                        <div class="custom-checkbox_M25W7486" @click="form.newsletter = !form.newsletter">
                             <input type="checkbox" v-model="form.newsletter" hidden>
-                            <span class="checkmark"></span>
+                            <span class="checkmark_M25W7486"></span>
                             <span><i class="fas fa-newspaper"></i> Newsletter Updates</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
-                        <span v-if="isSubmitting" class="loading-spinner"></span>
+                <div class="button-group_M25W7486">
+                    <button type="submit" class="btn_M25W7486 btn-primary_M25W7486" :disabled="isSubmitting">
+                        <span v-if="isSubmitting" class="loading-spinner_M25W7486"></span>
                         <span v-else>
                             <i class="fas fa-paper-plane"></i> Submit Appointment
                         </span>
                     </button>
-                    <button type="button" class="btn btn-danger" @click="resetForm">
+                    <button type="button" class="btn_M25W7486 btn-danger_M25W7486" @click="resetForm">
                         <i class="fas fa-redo"></i> Reset Form
                     </button>
                 </div>
@@ -547,77 +632,78 @@
         </main>
 
         <!-- Confirmation Modal - Shows after successful submission -->
-        <div class="modal-overlay" v-if="showModal" @click.self="closeModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
+        <div class="modal-overlay_M25W7486" v-if="showModal" @click.self="closeModal">
+            <div class="modal-content_M25W7486">
+                <div class="modal-header_M25W7486">
+                    <h2 class="modal-title_M25W7486">
                         <i class="fas fa-check-circle" style="color: var(--success);"></i>
                         Appointment Confirmed!
                     </h2>
-                    <button class="btn btn-secondary" @click="closeModal">
+                    <button class="btn btn_M25W7486-secondary_M25W7486" @click="closeModal">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
 
-                <div class="appointment-details">
-                    <div class="detail-row">
-                        <span class="detail-label">Appointment ID:</span>
-                        <span class="detail-value" style="color: var(--primary); font-weight: 800;">{{ appointmentId
+                <div class="appointment-details_M25W7486">
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Appointment ID:</span>
+                        <span class="detail-value_M25W7486" style="color: var(--primary); font-weight: 800;">{{
+                            appointmentId
                             }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Patient Name:</span>
-                        <span class="detail-value">{{ form.firstName }} {{ form.lastName }}</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Patient Name:</span>
+                        <span class="detail-value_M25W7486">{{ form.firstName }} {{ form.lastName }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Patient ID:</span>
-                        <span class="detail-value">{{ form.patientId }}</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Patient ID:</span>
+                        <span class="detail-value_M25W7486">{{ form.patientId }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Doctor:</span>
-                        <span class="detail-value">{{ form.doctor }}</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Doctor:</span>
+                        <span class="detail-value_M25W7486">{{ form.doctor }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Appointment Date & Time:</span>
-                        <span class="detail-value">{{ formatDateTime(form.appointmentDateTime) }}</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Appointment Date & Time:</span>
+                        <span class="detail-value_M25W7486">{{ formatDateTime(form.appointmentDateTime) }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Symptoms:</span>
-                        <span class="detail-value">{{ getSymptomsDisplay() }}</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Symptoms:</span>
+                        <span class="detail-value_M25W7486">{{ getSymptomsDisplay() }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Payment Method:</span>
-                        <span class="detail-value">{{ getCardTypeDisplay(form.cardType) }}</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Payment Method:</span>
+                        <span class="detail-value_M25W7486">{{ getCardTypeDisplay(form.cardType) }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Total Amount:</span>
-                        <span class="detail-value">$150.00</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Total Amount:</span>
+                        <span class="detail-value_M25W7486">$150.00</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">SMS Reminders:</span>
-                        <span class="detail-value">{{ form.smsReminder ? 'Yes' : 'No' }}</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">SMS Reminders:</span>
+                        <span class="detail-value_M25W7486">{{ form.smsReminder ? 'Yes' : 'No' }}</span>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Newsletter:</span>
-                        <span class="detail-value">{{ form.newsletter ? 'Yes' : 'No' }}</span>
+                    <div class="detail-row_M25W7486">
+                        <span class="detail-label_M25W7486">Newsletter:</span>
+                        <span class="detail-value_M25W7486">{{ form.newsletter ? 'Yes' : 'No' }}</span>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Appointment Summary (JSON):</label>
-                    <div class="json-display">
+                <div class="form-group_M25W7486">
+                    <label class="form-label_M25W7486">Appointment Summary (JSON):</label>
+                    <div class="json-display_M25W7486">
                         <pre v-html="formattedJSONHtml"></pre>
                     </div>
                 </div>
 
-                <div class="modal-actions">
-                    <button class="btn btn-primary" @click="saveData">
+                <div class="modal-actions_M25W7486">
+                    <button class="btn btn_M25W7486-primary_M25W7486" @click="saveData">
                         <i class="fas fa-save"></i> Save JSON Data
                     </button>
-                    <button class="btn btn-success" @click="printData">
+                    <button class="btn btn_M25W7486-success_M25W7486" @click="printData">
                         <i class="fas fa-print"></i> Print Appointment
                     </button>
-                    <button class="btn btn-secondary" @click="closeModal">
+                    <button class="btn btn_M25W7486-secondary_M25W7486" @click="closeModal">
                         <i class="fas fa-times"></i> Close
                     </button>
                 </div>
